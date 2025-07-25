@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hasil Rekomendasi Smartphone</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #1a202c; /* Dark background similar to the home page */
+            color: #e2e8f0; /* Light text color */
+        }
+        .container-box {
+            background-color: #2d3748; /* Darker shade for containers */
+            color: #e2e8f0;
+        }
+        .recommendation-card {
+            background-color: #2d3748; /* Darker shade for recommendation cards */
+            color: #e2e8f0;
+            border-radius: 0.75rem; /* rounded-xl */
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); /* shadow-md */
+            transition: transform 0.2s ease-in-out;
+        }
+        .recommendation-card:hover {
+            transform: translateY(-5px);
+        }
+        .spec-item {
+            /* Changed to flex-col for vertical stacking */
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 0.75rem; /* Increased margin for better spacing */
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05); /* Very subtle separator */
+            padding-bottom: 0.5rem; /* Increased padding for spacing */
+        }
+        .spec-label {
+            font-weight: 600;
+            color: #cbd5e0; /* gray-300 - default for labels */
+            margin-bottom: 0.25rem; /* Space between label and value */
+        }
+        .spec-value {
+            color: #e2e8f0; /* Light text for values */
+            text-align: left; /* Align value to the left, under the label */
+            word-wrap: break-word; /* Ensure long text wraps */
+            max-width: 100%; /* Ensure it fits within the parent */
+        }
+        /* Specific colors for labels in "Spesifikasi yang Anda Pilih" section */
+        .user-spec-label {
+            color: #63b3ed; /* blue-300 */
+            font-weight: 600;
+        }
+        /* Keep highlight for price */
+        .spec-value.price {
+            color: #48bb78; /* green-500 */
+            font-weight: bold;
+            font-size: 1.125rem; /* text-lg */
+        }
+    </style>
+</head>
+<body class="flex flex-col items-center min-h-screen p-4">
+    <nav class="w-full bg-gray-800 p-4 shadow-md mb-4 rounded-b-xl">
+        <div class="container mx-auto flex justify-between items-center">
+            <div class="text-2xl font-bold text-white">
+                <span class="text-blue-400">Smart</span>Rec
+            </div>
+            <div class="flex space-x-6">
+                <a href="/" class="text-white hover:text-blue-400 transition duration-300">Beranda</a>
+                <a href="/form" class="text-white hover:text-blue-400 transition duration-300">Rekomendasi</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-box p-8 rounded-xl shadow-lg max-w-6xl w-full mb-8">
+        <h1 class="text-3xl font-bold mb-2 text-center">Rekomendasi Smartphone</h1>
+        <p class="text-lg text-gray-400 mb-8 text-center">Hasil Rekomendasi Smartphone Berdasarkan Pilihan</p>
+
+        <div class="mb-8 p-6 rounded-lg border border-gray-600 bg-gray-700">
+            <h2 class="text-xl font-semibold mb-4">Spesifikasi yang Anda Pilih:</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-gray-300">
+                <div>
+                    <span class="user-spec-label">Merek:</span> {{ user_keywords[0] if user_keywords|length > 0 else '-' }}
+                </div>
+                <div>
+                    <span class="user-spec-label">Dual SIM:</span> {{ user_keywords[1] if user_keywords|length > 1 else '-' }}
+                </div>
+                <div>
+                    <span class="user-spec-label">Jaringan 5G:</span> {{ user_keywords[2] if user_keywords|length > 2 else '-' }}
+                </div>
+
+                <div>
+                    <span class="user-spec-label">NFC:</span> {{ user_keywords[3] if user_keywords|length > 3 else '-' }}
+                </div>
+                <div>
+                    <span class="user-spec-label">Ukuran Layar:</span> {{ user_keywords[4] if user_keywords|length > 4 else '-' }}
+                </div>
+                <div>
+                    <span class="user-spec-label">Processor:</span> {{ user_keywords[5] if user_keywords|length > 5 else '-' }}
+                </div>
+
+                <div>
+                    <span class="user-spec-label">RAM:</span> {{ user_keywords[6] if user_keywords|length > 6 else '-' }}
+                </div>
+                <div>
+                    <span class="user-spec-label">ROM:</span> {{ user_keywords[7] if user_keywords|length > 7 else '-' }}
+                </div>
+                <div>
+                    <span class="user-spec-label">Baterai:</span> {{ user_keywords[8] if user_keywords|length > 8 else '-' }}
+                </div>
+
+                <div>
+                    <span class="user-spec-label">Kamera:</span> {{ user_keywords[9] if user_keywords|length > 9 else '-' }}
+                </div>
+                <div>
+                    <span class="user-spec-label">Memory Card:</span> {{ user_keywords[10] if user_keywords|length > 10 else '-' }}
+                </div>
+                <div>
+                    <span class="user-spec-label">Harga:</span> {{ user_keywords[11] if user_keywords|length > 11 else '-' }}
+                </div>
+            </div>
+        </div>
+
+        {% if recommendations.empty %}
+            <p class="text-center text-gray-400 text-lg">Tidak ada rekomendasi yang ditemukan berdasarkan pilihan Anda. Coba ubah preferensi Anda.</p>
+        {% else %}
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-6">
+                {% for index, row in recommendations.iterrows() %}
+                    <div class="recommendation-card p-6">
+                        <h3 class="text-xl font-bold mb-4 text-blue-400">{{ row['model'] }}</h3>
+                        <div class="space-y-2 text-sm">
+                            <div class="spec-item">
+                                <span class="spec-label">SIM:</span>
+                                <span class="spec-value">{{ row['sim'] }}</span>
+                            </div>
+                            <div class="spec-item">
+                                <span class="spec-label">Processor:</span>
+                                <span class="spec-value">{{ row['processor'] }}</span>
+                            </div>
+                            <div class="spec-item">
+                                <span class="spec-label">RAM/ROM:</span>
+                                <span class="spec-value">{{ row['RAM'] }}/{{ row['ROM'] }}</span>
+                            </div>
+                            <div class="spec-item">
+                                <span class="spec-label">Baterai:</span>
+                                <span class="spec-value">{{ row['battery'] }}</span>
+                            </div>
+                            <div class="spec-item">
+                                <span class="spec-label">Display:</span>
+                                <span class="spec-value">{{ row['display'] }}</span>
+                            </div>
+                            <div class="spec-item">
+                                <span class="spec-label">Kamera:</span>
+                                <span class="spec-value">{{ row['camera'] }}</span>
+                            </div>
+                            <div class="spec-item">
+                                <span class="spec-label">Memory Card:</span>
+                                <span class="spec-value">{{ row['card'] }}</span>
+                            </div>
+                            <div class="spec-item">
+                                <span class="spec-label">Harga:</span>
+                                <span class="spec-value price">{{ row['harga(string)'] }}</span>
+                            </div>
+                            <!-- <div class="spec-item">
+                                <span class="spec-label">Kemiripan:</span>
+                                <span class="spec-value">{{ "%.2f"|format(row['Cosine Similarity']) }}</span>
+                            </div> -->
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <div class="mt-12 text-center">
+            <a href="/form" class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-full shadow-md transition duration-300 ease-in-out transform hover:scale-105 mr-4">
+                Kembali ke Formulir
+            </a>
+            <a href="/" class="inline-block bg-gray-600 hover:bg-gray-700 text-white font-semibold py-3 px-8 rounded-full shadow-md transition duration-300 ease-in-out transform hover:scale-105">
+                Kembali ke Beranda
+            </a>
+        </div>
+    </div>
+</body>
+</html>

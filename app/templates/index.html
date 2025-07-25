@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartRec - Sistem Rekomendasi Smartphone</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #1a202c; /* Dark background similar to the image */
+            color: #e2e8f0; /* Light text color */
+        }
+        .navbar {
+            background-color: #2d3748; /* Darker shade for navbar */
+        }
+        .hero-section {
+            background: linear-gradient(to right, #00c6ff, #0072ff); /* Gradient background for hero */
+            color: white;
+        }
+        .feature-card {
+            background-color: #2d3748; /* Darker shade for feature cards */
+            color: #e2e8f0;
+        }
+        .footer {
+            background-color: #2d3748; /* Darker shade for footer */
+        }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen">
+    <!-- Navbar -->
+    <nav class="navbar p-4 shadow-md">
+        <div class="container mx-auto flex justify-between items-center">
+            <div class="text-2xl font-bold text-white">
+                <span class="text-blue-400">Smart</span>Rec
+            </div>
+            <div class="flex space-x-6">
+                <a href="/" class="text-white hover:text-blue-400 transition duration-300">Beranda</a>
+                <a href="#work" class="text-white hover:text-blue-400 transition duration-300">Cara Kerja</a>
+                <a href="/form" class="text-white hover:text-blue-400 transition duration-300">Rekomendasi</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero-section py-20 px-4 text-center rounded-b-xl shadow-lg mx-4 mt-4">
+        <h1 class="text-5xl font-extrabold mb-6">Temukan Smartphone Ideal Anda</h1>
+        <p class="text-xl mb-8 max-w-2xl mx-auto">
+            Sistem rekomendasi kami membantu Anda menemukan smartphone terbaik berdasarkan kebutuhan dan preferensi spesifikasi Anda.
+        </p>
+        <a href="/form" class="inline-block bg-white text-blue-600 font-semibold py-3 px-8 rounded-full shadow-lg hover:bg-gray-100 transition duration-300 ease-in-out transform hover:scale-105">
+            Dapatkan Rekomendasi Sekarang <span class="ml-2">&gt;</span>
+        </a>
+    </header>
+
+    <!-- Features Section -->
+    <section class="py-16 px-4 container mx-auto">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Feature Card 1: Analisis Kebutuhan -->
+            <div class="feature-card p-6 rounded-xl shadow-lg text-center">
+                <div class="text-blue-400 text-5xl mb-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
+                </div>
+                <h2 class="text-2xl font-semibold mb-3">Analisis Kebutuhan</h2>
+                <p class="text-gray-400">
+                    Jawab beberapa pertanyaan sederhana tentang kebutuhan smartphone Anda, dan biarkan sistem kami melakukan analisis untuk Anda.
+                </p>
+            </div>
+
+            <!-- Feature Card 2: Rekomendasi Cerdas -->
+            <div class="feature-card p-6 rounded-xl shadow-lg text-center">
+                <div class="text-green-400 text-5xl mb-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 17v-2m3 2v-4m3 2v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                    </svg>
+                </div>
+                <h2 class="text-2xl font-semibold mb-3">Rekomendasi Cerdas</h2>
+                <p class="text-gray-400">
+                    Sistem kami menggunakan algoritma canggih yang dapat menemukan rekomendasi yang paling sesuai dengan pilihan Anda.
+                </p>
+            </div>
+
+            <!-- Feature Card 3: Perbandingan Lengkap -->
+            <div class="feature-card p-6 rounded-xl shadow-lg text-center">
+                <div class="text-purple-400 text-5xl mb-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M7 12l3-3m0 0l3 3m-3-3v8m0-9a9 9 0 110 18 9 9 0 010-18z" />
+                    </svg>
+                </div>
+                <h2 class="text-2xl font-semibold mb-3">Perbandingan Lengkap</h2>
+                <p class="text-gray-400">
+                    Dapatkan perbandingan mendetail antara beberapa smartphone terbaik yang direkomendasikan untuk Anda.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- How it Works Section -->
+    <section class="py-16 px-4 container mx-auto">
+        <h2 id="work" class="text-3xl font-bold text-center text-white mb-10">Bagaimana Cara Kerjanya?</h2>
+        <div class="space-y-6">
+            <!-- Step 1 -->
+            <div class="bg-gray-700 p-6 rounded-xl shadow-md flex items-center space-x-4">
+                <div class="bg-blue-600 text-white rounded-full h-10 w-10 flex items-center justify-center text-lg font-bold flex-shrink-0">1</div>
+                <div>
+                    <h3 class="text-xl font-semibold text-white mb-2">Isi Formulir Rekomendasi</h3>
+                    <p class="text-gray-300">Masukkan preferensi Anda mengenai spesifikasi smartphone yang diinginkan seperti merek, ukuran layar, kapasitas RAM, dan lainnya.</p>
+                </div>
+            </div>
+            <!-- Step 2 -->
+            <div class="bg-gray-700 p-6 rounded-xl shadow-md flex items-center space-x-4">
+                <div class="bg-blue-600 text-white rounded-full h-10 w-10 flex items-center justify-center text-lg font-bold flex-shrink-0">2</div>
+                <div>
+                    <h3 class="text-xl font-semibold text-white mb-2">Analisis oleh Sistem</h3>
+                    <p class="text-gray-300">Sistem akan memproses preferensi Anda dan mencocokkannya dengan database smartphone kami.</p>
+                </div>
+            </div>
+            <!-- Step 3 -->
+            <div class="bg-gray-700 p-6 rounded-xl shadow-md flex items-center space-x-4">
+                <div class="bg-blue-600 text-white rounded-full h-10 w-10 flex items-center justify-center text-lg font-bold flex-shrink-0">3</div>
+                <div>
+                    <h3 class="text-xl font-semibold text-white mb-2">Dapatkan Rekomendasi</h3>
+                    <p class="text-gray-300">Lihat hasil rekomendasi smartphone yang paling sesuai dengan kebutuhan Anda, lengkap dengan detail spesifikasi.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer py-8 px-4 mt-auto text-center rounded-t-xl shadow-inner mx-4 mb-4">
+        <div class="text-2xl font-bold text-white mb-4">
+            <span class="text-blue-400">Smart</span>Rec
+        </div>
+        <!-- <p class="text-gray-400 mb-2">Sistem Rekomendasi Smartphone Terbaik Berdasarkan Kebutuhan Anda</p> -->
+        <p class="text-gray-500">&copy;Ilhamnc</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulir Rekomendasi Smartphone</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #1a202c; /* Dark background similar to the home page */
+            color: #e2e8f0; /* Light text color */
+        }
+        .form-container {
+            background-color: #2d3748; /* Darker shade for the form container */
+            color: #e2e8f0;
+        }
+        .form-group label {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            display: block;
+            color: #e2e8f0; /* Light text for labels */
+        }
+        .form-group select {
+            width: 100%;
+            padding: 0.75rem;
+            border-radius: 0.5rem; /* rounded-lg */
+            border: 1px solid #4a5568; /* Darker border */
+            background-color: #4a5568; /* Darker background for select */
+            color: #e2e8f0; /* Light text for select options */
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); /* shadow-sm */
+            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+            -webkit-appearance: none; /* Remove default arrow on select */
+            -moz-appearance: none;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='currentColor'%3E%3Cpath fill-rule='evenodd' d='M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z' clip-rule='evenodd' /%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 0.75rem center;
+            background-size: 1.5em 1.5em;
+        }
+        .form-group select:focus {
+            outline: none;
+            border-color: #63b3ed; /* blue-300 */
+            box-shadow: 0 0 0 3px rgba(99, 179, 237, 0.25); /* ring-blue-200 */
+        }
+        .tips-section {
+            background-color: #2d3748; /* Darker shade for tips section */
+            color: #e2e8f0;
+        }
+    </style>
+</head>
+<body class="flex flex-col items-center min-h-screen p-4">
+    <!-- Navbar (Optional, can be added if you want consistent navigation) -->
+    <nav class="w-full bg-gray-800 p-4 shadow-md mb-4 rounded-b-xl">
+        <div class="container mx-auto flex justify-between items-center">
+            <div class="text-2xl font-bold text-white">
+                <span class="text-blue-400">Smart</span>Rec
+            </div>
+            <div class="flex space-x-6">
+                <a href="/" class="text-white hover:text-blue-400 transition duration-300">Beranda</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Tips Section - Moved to the top -->
+    <div class="tips-section p-8 rounded-xl shadow-lg max-w-4xl w-full mb-8">
+        <h2 class="text-2xl font-bold mb-6">Tips Memilih Smartphone</h2>
+        <ul class="space-y-4">
+            <li class="flex items-start space-x-3">
+                <span class="text-yellow-400 text-2xl flex-shrink-0">💡</span>
+                <p class="text-gray-300">Sesuaikan spesifikasi dengan kebutuhan harian Anda. Tidak perlu memilih spesifikasi tinggi jika hanya untuk penggunaan sehari-hari.</p>
+            </li>
+            <li class="flex items-start space-x-3">
+                <span class="text-green-400 text-2xl flex-shrink-0">💵</span>
+                <p class="text-gray-300">Pertimbangkan budget yang sesuai dengan kemampuan finansial Anda. Smartphone dengan harga lebih tinggi tidak selalu berarti lebih baik untuk kebutuhan Anda.</p>
+            </li>
+            <li class="flex items-start space-x-3">
+                <span class="text-blue-400 text-2xl flex-shrink-0">🔋</span>
+                <p class="text-gray-300">Untuk pengguna berat, perhatikan kapasitas baterai yang besar untuk pengalaman penggunaan yang lebih baik.</p>
+            </li>
+        </ul>
+    </div>
+
+    <div class="form-container p-8 rounded-xl shadow-lg max-w-4xl w-full mb-8">
+        <h1 class="text-3xl font-bold mb-8 text-center">Rekomendasi Smartphone Berdasarkan Spesifikasi</h1>
+
+        <form action="/recommend" method="POST" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="form-group">
+                <label for="merek">Pilih Merek:</label>
+                <select id="merek" name="merek" class="block w-full" required>
+                    {% for merek in mereks %}
+                        <option value="{{ merek }}">{{ merek }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="dukunganDualSim">Dukungan Dual SIM:</label>
+                <select id="dukunganDualSim" name="dukunganDualSim" class="block w-full" required>
+                    {% for dualsim in dualsims %}
+                        <option value="{{ dualsim }}">{{ dualsim }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="dukungan5G">Dukungan 5G:</label>
+                <select id="dukungan5G" name="dukungan5G" class="block w-full" required>
+                    {% for jaringan in jaringans %}
+                        <option value="{{ jaringan }}">{{ jaringan }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="dukunganNFC">Dukungan NFC:</label>
+                <select id="dukunganNFC" name="dukunganNFC" class="block w-full" required>
+                    {% for nfc in nfcs %}
+                        <option value="{{ nfc }}">{{ nfc }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="rentangLayar">Ukuran Layar:</label>
+                <select id="rentangLayar" name="rentangLayar" class="block w-full" required>
+                    {% for display in displays %}
+                        <option value="{{ display }}">{{ display }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="merekProcessor">Merek Processor:</label>
+                <select id="merekProcessor" name="merekProcessor" class="block w-full" required>
+                    {% for chipset in chipsets %}
+                        <option value="{{ chipset }}">{{ chipset }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="RAM">Kapasitas RAM:</label>
+                <select id="RAM" name="RAM" class="block w-full" required>
+                    {% for ram in rams %}
+                        <option value="{{ ram }}">{{ ram }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="ROM">Kapasitas ROM:</label>
+                <select id="ROM" name="ROM" class="block w-full" required>
+                    {% for rom in roms %}
+                        <option value="{{ rom }}">{{ rom }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="rentangBaterai">Kapasitas Baterai:</label>
+                <select id="rentangBaterai" name="rentangBaterai" class="block w-full" required>
+                    {% for battery in batteries %}
+                        <option value="{{ battery }}">{{ battery }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="rentangKamera">Resolusi Kamera Utama:</label>
+                <select id="rentangKamera" name="rentangKamera" class="block w-full" required>
+                    {% for camera in cameras %}
+                        <option value="{{ camera }}">{{ camera }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="dukunganMemoryCard">Dukungan Memory Card:</label>
+                <select id="dukunganMemoryCard" name="dukunganMemoryCard" class="block w-full" required>
+                    {% for card in cards %}
+                        <option value="{{ card }}">{{ card }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="rentangHarga">Harga:</label>
+                <select id="rentangHarga" name="rentangHarga" class="block w-full" required>
+                    {% for harga in hargas %}
+                        <option value="{{ harga }}">{{ harga }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="md:col-span-2 flex justify-center mt-6">
+                <button type="submit" class="bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-8 rounded-full shadow-md transition duration-300 ease-in-out transform hover:scale-105">
+                    Dapatkan Rekomendasi
+                </button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
