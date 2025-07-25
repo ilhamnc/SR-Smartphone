@@ -2,14 +2,13 @@ from flask import Blueprint, render_template, request, current_app
 import re
 from .recommend import recommend
 
-app = Blueprint('main', __name__)
+main_app = Blueprint('main', __name__)
 
-@app.route("/")
+@main_app.route("/")
 def index():
     return render_template('index.html')
 
-
-@app.route('/form', methods=['GET'])
+@main_app.route('/form', methods=['GET'])
 def form():
     df = current_app.config['DATAFRAME']
 
@@ -41,10 +40,11 @@ def form():
         hargas=harga_options
     )
 
-
-@app.route('/recommend', methods=['POST'])
+@main_app.route('/recommend', methods=['POST'])
 def do_recommend():
     df = current_app.config['DATAFRAME']
+    vectorizer = current_app.config['VECTORIZER']
+    tfidf_matrix = current_app.config['TFIDF_MATRIX']
 
     selected_brand = request.form['merek']
     selected_dualsim = request.form['dukunganDualSim']
@@ -58,7 +58,7 @@ def do_recommend():
     selected_camera = request.form['rentangKamera']
     selected_card = request.form['dukunganMemoryCard']
     selected_harga = request.form['rentangHarga']
-
+    
     user_keywords = [
         selected_brand,
         selected_dualsim,
@@ -74,6 +74,7 @@ def do_recommend():
         selected_harga
     ]
 
-    recommendations = recommend(df, user_keywords)
+    # Panggil fungsi recommend dengan argumen baru
+    recommendations = recommend(df, vectorizer, tfidf_matrix, user_keywords)
 
     return render_template('recommendations.html', user_keywords=user_keywords, recommendations=recommendations)
