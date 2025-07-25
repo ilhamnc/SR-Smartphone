@@ -2,14 +2,14 @@ from flask import Blueprint, render_template, request, current_app
 import re
 from .recommend import recommend
 
-main_bp = Blueprint('main', __name__)
+app = Blueprint('main', __name__)
 
-@main_bp.route("/")
+@app.route("/")
 def index():
     return render_template('index.html')
 
 
-@main_bp.route('/form', methods=['GET'])
+@app.route('/form', methods=['GET'])
 def form():
     df = current_app.config['DATAFRAME']
 
@@ -42,7 +42,7 @@ def form():
     )
 
 
-@main_bp.route('/recommend', methods=['POST'])
+@app.route('/recommend', methods=['POST'])
 def do_recommend():
     df = current_app.config['DATAFRAME']
 
