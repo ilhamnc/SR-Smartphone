@@ -85,7 +85,11 @@ def getRentangKamera(camera):
         elif 31 <= resolusiKamera <= 60:
             return '30-60 MP'
         elif 61 <= resolusiKamera <= 90:
+<<<<<<< HEAD
             return '60-90 MP'
+=======
+            return '61-90 MP'
+>>>>>>> 3b121b633f9232823f2fcfec6a94b4c56152e802
         elif resolusiKamera > 90:
             return 'Lebih dari 90 MP'
     return None
