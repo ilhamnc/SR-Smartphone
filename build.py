@@ -1,20 +1,18 @@
 import pandas as pd
 import pickle
-from app.preprocessing import preprocess_data # Impor fungsi preprocessing Anda
+from app.preprocessing import preprocess_data 
 from sklearn.feature_extraction.text import TfidfVectorizer
 
 print("Memulai proses build...")
 
-# 1. Baca dan proses data dengan pandas (hanya di sini)
 df = pd.read_csv('smartphones.csv')
 processed_df = preprocess_data(df)
 
-# 2. Buat dan latih TfidfVectorizer
+# Buat dan latih TfidfVectorizer
 vectorizer = TfidfVectorizer()
 tfidf_matrix = vectorizer.fit_transform(processed_df['features'])
 
-# 3. Simpan objek yang dibutuhkan ke file
-# Simpan dataframe yang sudah bersih sebagai file JSON (jauh lebih ringan)
+# Simpan dataframe yang sudah bersih sebagai file JSON
 processed_df.to_json('app/data/smartphones_processed.json', orient='records')
 
 # Simpan vectorizer dan matrix TF-IDF menggunakan pickle

@@ -1,19 +1,18 @@
 from flask import Flask
-import pandas as pd # Kita butuh pandas untuk membaca JSON, ini bisa diganti
+import pandas as pd 
 import pickle
 import json
 
 def create_app():
     app = Flask(__name__)
 
-    # Load data dan model yang sudah diproses saat build
-    # Opsi 1: Menggunakan pandas (jika masih diperlukan)
-    df = pd.read_json('app/data/smartphones_processed.json', orient='records')
+    # Load data dan model yang sudah diproses saat build menggunakan pandas
+    # df = pd.read_json('app/data/smartphones_processed.json', orient='records')
     
-    # Opsi 2 (LEBIH BAIK): Tanpa pandas, gunakan modul json bawaan
-    # with open('app/data/smartphones_processed.json', 'r') as f:
-    #     data_records = json.load(f)
-    # df = pd.DataFrame(data_records) # Ubah jadi dataframe jika recommend.py masih butuh
+    # Load data dan model yang sudah diproses saat build tanpa pandas, gunakan modul json bawaan
+    with open('app/data/smartphones_processed.json', 'r') as f:
+        data_records = json.load(f)
+    df = pd.DataFrame(data_records) # Ubah jadi dataframe 
     
     with open('app/data/vectorizer.pkl', 'rb') as f:
         vectorizer = pickle.load(f)

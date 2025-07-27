@@ -84,8 +84,10 @@ def getRentangKamera(camera):
             return 'Kurang dari 30 MP'
         elif 31 <= resolusiKamera <= 60:
             return '30-60 MP'
-        elif resolusiKamera > 60:
-            return 'Lebih dari 60 MP'
+        elif 61 <= resolusiKamera <= 90:
+            return '60-90 MP'
+        elif resolusiKamera > 90:
+            return 'Lebih dari 90 MP'
     return None
 
 def getDukunganMemoryCard(mCard):
