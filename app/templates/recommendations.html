@@ -7,54 +7,81 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
+        html {
+            scroll-behavior: smooth;
+        }
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #1a202c; /* Dark background similar to the home page */
-            color: #e2e8f0; /* Light text color */
+            background-color: #1a202c;
+            color: #e2e8f0;
         }
         .container-box {
-            background-color: #2d3748; /* Darker shade for containers */
+            background-color: #2d3748;
             color: #e2e8f0;
         }
         .recommendation-card {
-            background-color: #2d3748; /* Darker shade for recommendation cards */
+            background-color: #2d3748;
             color: #e2e8f0;
-            border-radius: 0.75rem; /* rounded-xl */
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); /* shadow-md */
-            transition: transform 0.2s ease-in-out;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            transition: background-color 0.2s ease-in-out;
         }
-        .recommendation-card:hover {
-            transform: translateY(-5px);
+        .recommendation-card-header {
+            cursor: pointer;
+            padding: 1rem; 
+        }
+        .recommendation-card-header:hover {
+            background-color: #4a5568;
+            border-radius: 0.75rem;
         }
         .spec-item {
-            /* Changed to flex-col for vertical stacking */
             display: flex;
             flex-direction: column;
-            margin-bottom: 0.75rem; /* Increased margin for better spacing */
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05); /* Very subtle separator */
-            padding-bottom: 0.5rem; /* Increased padding for spacing */
+            margin-bottom: 0.75rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding-bottom: 0.5rem;
         }
         .spec-label {
             font-weight: 600;
-            color: #cbd5e0; /* gray-300 - default for labels */
-            margin-bottom: 0.25rem; /* Space between label and value */
+            color: #cbd5e0;
+            margin-bottom: 0.25rem;
         }
         .spec-value {
-            color: #e2e8f0; /* Light text for values */
-            text-align: left; /* Align value to the left, under the label */
-            word-wrap: break-word; /* Ensure long text wraps */
-            max-width: 100%; /* Ensure it fits within the parent */
+            color: #e2e8f0;
+            text-align: left;
+            word-wrap: break-word;
+            max-width: 100%;
         }
-        /* Specific colors for labels in "Spesifikasi yang Anda Pilih" section */
         .user-spec-label {
-            color: #63b3ed; /* blue-300 */
+            color: #63b3ed;
             font-weight: 600;
         }
-        /* Keep highlight for price */
         .spec-value.price {
-            color: #48bb78; /* green-500 */
+            color: #48bb78;
             font-weight: bold;
-            font-size: 1.125rem; /* text-lg */
+            font-size: 1.125rem;
+        }
+        .comparison-table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 1.5rem;
+        }
+        .comparison-table th, .comparison-table td {
+            border: 1px solid #4a5568;
+            padding: 0.75rem;
+            text-align: left;
+        }
+        .comparison-table th {
+            background-color: #1a202c;
+            font-size: 1.125rem;
+            color: #63b3ed;
+        }
+        .comparison-table tr:nth-child(even) {
+            background-color: #374151;
+        }
+        .comparison-spec-label {
+            font-weight: 600;
+            color: #cbd5e0;
         }
     </style>
 </head>
@@ -73,101 +100,89 @@
 
     <div class="container-box p-8 rounded-xl shadow-lg max-w-6xl w-full mb-8">
         <h1 class="text-3xl font-bold mb-2 text-center">Rekomendasi Smartphone</h1>
-        <p class="text-lg text-gray-400 mb-8 text-center">Hasil Rekomendasi Smartphone Berdasarkan Pilihan</p>
+        <p class="text-lg text-gray-400 mb-6 text-center">Hasil Analisis Berdasarkan Spesifikasi Pilihan Anda</p>
 
-        <div class="mb-8 p-6 rounded-lg border border-gray-600 bg-gray-700">
+        <div class="flex justify-center space-x-2 md:space-x-4 mb-10 sticky top-0 z-50 bg-gray-700 py-3 -mx-8 px-8 shadow-lg">
+            <a href="#spesifikasi-pilihan" class="text-xs md:text-sm font-semibold text-white bg-gray-600 hover:bg-blue-500 rounded-md px-3 py-2 transition-colors duration-300">Spesifikasi</a>
+            <a href="#rekomendasi-mirip" class="text-xs md:text-sm font-semibold text-white bg-gray-600 hover:bg-blue-500 rounded-md px-3 py-2 transition-colors duration-300">Rekomendasi</a>
+            <a href="#perbandingan-teratas" class="text-xs md:text-sm font-semibold text-white bg-gray-600 hover:bg-blue-500 rounded-md px-3 py-2 transition-colors duration-300">Perbandingan</a>
+        </div>
+
+        <div id="spesifikasi-pilihan" class="mb-8 p-6 rounded-lg border border-gray-600 bg-gray-700 scroll-mt-24">
             <h2 class="text-xl font-semibold mb-4">Spesifikasi yang Anda Pilih:</h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-gray-300">
-                <div>
-                    <span class="user-spec-label">Merek:</span> {{ user_keywords[0] if user_keywords|length > 0 else '-' }}
-                </div>
-                <div>
-                    <span class="user-spec-label">Dual SIM:</span> {{ user_keywords[1] if user_keywords|length > 1 else '-' }}
-                </div>
-                <div>
-                    <span class="user-spec-label">Jaringan 5G:</span> {{ user_keywords[2] if user_keywords|length > 2 else '-' }}
-                </div>
-
-                <div>
-                    <span class="user-spec-label">NFC:</span> {{ user_keywords[3] if user_keywords|length > 3 else '-' }}
-                </div>
-                <div>
-                    <span class="user-spec-label">Ukuran Layar:</span> {{ user_keywords[4] if user_keywords|length > 4 else '-' }}
-                </div>
-                <div>
-                    <span class="user-spec-label">Processor:</span> {{ user_keywords[5] if user_keywords|length > 5 else '-' }}
-                </div>
-
-                <div>
-                    <span class="user-spec-label">RAM:</span> {{ user_keywords[6] if user_keywords|length > 6 else '-' }}
-                </div>
-                <div>
-                    <span class="user-spec-label">ROM:</span> {{ user_keywords[7] if user_keywords|length > 7 else '-' }}
-                </div>
-                <div>
-                    <span class="user-spec-label">Baterai:</span> {{ user_keywords[8] if user_keywords|length > 8 else '-' }}
-                </div>
-
-                <div>
-                    <span class="user-spec-label">Kamera:</span> {{ user_keywords[9] if user_keywords|length > 9 else '-' }}
-                </div>
-                <div>
-                    <span class="user-spec-label">Memory Card:</span> {{ user_keywords[10] if user_keywords|length > 10 else '-' }}
-                </div>
-                <div>
-                    <span class="user-spec-label">Harga:</span> {{ user_keywords[11] if user_keywords|length > 11 else '-' }}
-                </div>
+                <div><span class="user-spec-label">Merek:</span> {{ user_keywords[0] if user_keywords|length > 0 else '-' }}</div>
+                <div><span class="user-spec-label">Dual SIM:</span> {{ user_keywords[1] if user_keywords|length > 1 else '-' }}</div>
+                <div><span class="user-spec-label">Jaringan 5G:</span> {{ user_keywords[2] if user_keywords|length > 2 else '-' }}</div>
+                <div><span class="user-spec-label">NFC:</span> {{ user_keywords[3] if user_keywords|length > 3 else '-' }}</div>
+                <div><span class="user-spec-label">Ukuran Layar:</span> {{ user_keywords[4] if user_keywords|length > 4 else '-' }}</div>
+                <div><span class="user-spec-label">Processor:</span> {{ user_keywords[5] if user_keywords|length > 5 else '-' }}</div>
+                <div><span class="user-spec-label">RAM:</span> {{ user_keywords[6] if user_keywords|length > 6 else '-' }}</div>
+                <div><span class="user-spec-label">ROM:</span> {{ user_keywords[7] if user_keywords|length > 7 else '-' }}</div>
+                <div><span class="user-spec-label">Baterai:</span> {{ user_keywords[8] if user_keywords|length > 8 else '-' }}</div>
+                <div><span class="user-spec-label">Kamera:</span> {{ user_keywords[9] if user_keywords|length > 9 else '-' }}</div>
+                <div><span class="user-spec-label">Memory Card:</span> {{ user_keywords[10] if user_keywords|length > 10 else '-' }}</div>
+                <div><span class="user-spec-label">Harga:</span> {{ user_keywords[11] if user_keywords|length > 11 else '-' }}</div>
             </div>
         </div>
 
         {% if recommendations.empty %}
             <p class="text-center text-gray-400 text-lg">Tidak ada rekomendasi yang ditemukan berdasarkan pilihan Anda. Coba ubah preferensi Anda.</p>
         {% else %}
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-6">
-                {% for index, row in recommendations.iterrows() %}
-                    <div class="recommendation-card p-6">
-                        <h3 class="text-xl font-bold mb-4 text-blue-400">{{ row['model'] }}</h3>
-                        <div class="space-y-2 text-sm">
-                            <div class="spec-item">
-                                <span class="spec-label">SIM:</span>
-                                <span class="spec-value">{{ row['sim'] }}</span>
+            <div id="rekomendasi-mirip" class="scroll-mt-24">
+                <h2 class="text-2xl font-bold mb-6 text-center text-white">{{ recommendations|length }} Smartphone Paling Mirip Dengan Spesifikasi Anda</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-4">
+                    {% for index, row in recommendations.iterrows() %}
+                        <div class="recommendation-card">
+                            <div class="recommendation-card-header toggle-details">
+                                <div class="flex justify-between items-center">
+                                    <h3 class="text-lg font-bold text-blue-400">{{ row['model'] }}</h3>
+                                    <span class="arrow transform transition-transform duration-300">▼</span>
+                                </div>
                             </div>
-                            <div class="spec-item">
-                                <span class="spec-label">Processor:</span>
-                                <span class="spec-value">{{ row['processor'] }}</span>
+                            <div class="details-content hidden px-4 pb-4">
+                                <div class="space-y-2 text-sm">
+                                    <div class="spec-item"><span class="spec-label">SIM:</span><span class="spec-value">{{ row['sim'] }}</span></div>
+                                    <div class="spec-item"><span class="spec-label">Processor:</span><span class="spec-value">{{ row['processor'] }}</span></div>
+                                    <div class="spec-item"><span class="spec-label">RAM/ROM:</span><span class="spec-value">{{ row['RAM'] }}/{{ row['ROM'] }}</span></div>
+                                    <div class="spec-item"><span class="spec-label">Baterai:</span><span class="spec-value">{{ row['battery'] }}</span></div>
+                                    <div class="spec-item"><span class="spec-label">Display:</span><span class="spec-value">{{ row['display'] }}</span></div>
+                                    <div class="spec-item"><span class="spec-label">Kamera:</span><span class="spec-value">{{ row['camera'] }}</span></div>
+                                    <div class="spec-item"><span class="spec-label">Memory Card:</span><span class="spec-value">{{ row['card'] }}</span></div>
+                                    <div class="spec-item"><span class="spec-label">Harga:</span><span class="spec-value price">{{ row['harga(string)'] }}</span></div>
+                                </div>
                             </div>
-                            <div class="spec-item">
-                                <span class="spec-label">RAM/ROM:</span>
-                                <span class="spec-value">{{ row['RAM'] }}/{{ row['ROM'] }}</span>
-                            </div>
-                            <div class="spec-item">
-                                <span class="spec-label">Baterai:</span>
-                                <span class="spec-value">{{ row['battery'] }}</span>
-                            </div>
-                            <div class="spec-item">
-                                <span class="spec-label">Display:</span>
-                                <span class="spec-value">{{ row['display'] }}</span>
-                            </div>
-                            <div class="spec-item">
-                                <span class="spec-label">Kamera:</span>
-                                <span class="spec-value">{{ row['camera'] }}</span>
-                            </div>
-                            <div class="spec-item">
-                                <span class="spec-label">Memory Card:</span>
-                                <span class="spec-value">{{ row['card'] }}</span>
-                            </div>
-                            <div class="spec-item">
-                                <span class="spec-label">Harga:</span>
-                                <span class="spec-value price">{{ row['harga(string)'] }}</span>
-                            </div>
-                            <!-- <div class="spec-item">
-                                <span class="spec-label">Kemiripan:</span>
-                                <span class="spec-value">{{ "%.2f"|format(row['Cosine Similarity']) }}</span>
-                            </div> -->
                         </div>
-                    </div>
-                {% endfor %}
+                    {% endfor %}
+                </div>
             </div>
+
+            {% if recommendations|length >= 2 %}
+                <div id="perbandingan-teratas" class="mt-12 scroll-mt-24">
+                    <h2 class="text-2xl font-bold mb-6 text-center text-white">2 Smartphone Yang Paling Direkomendasikan</h2>
+                    <div class="overflow-x-auto">
+                        <table class="comparison-table">
+                            <thead>
+                                <tr>
+                                    <th>Spesifikasi</th>
+                                    <th>{{ recommendations.iloc[0]['model'] }}</th>
+                                    <th>{{ recommendations.iloc[1]['model'] }}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td class="comparison-spec-label">SIM</td><td>{{ recommendations.iloc[0]['sim'] }}</td><td>{{ recommendations.iloc[1]['sim'] }}</td></tr>
+                                <tr><td class="comparison-spec-label">Processor</td><td>{{ recommendations.iloc[0]['processor'] }}</td><td>{{ recommendations.iloc[1]['processor'] }}</td></tr>
+                                <tr><td class="comparison-spec-label">RAM / ROM</td><td>{{ recommendations.iloc[0]['RAM'] }} / {{ recommendations.iloc[0]['ROM'] }}</td><td>{{ recommendations.iloc[1]['RAM'] }} / {{ recommendations.iloc[1]['ROM'] }}</td></tr>
+                                <tr><td class="comparison-spec-label">Baterai</td><td>{{ recommendations.iloc[0]['battery'] }}</td><td>{{ recommendations.iloc[1]['battery'] }}</td></tr>
+                                <tr><td class="comparison-spec-label">Display</td><td>{{ recommendations.iloc[0]['display'] }}</td><td>{{ recommendations.iloc[1]['display'] }}</td></tr>
+                                <tr><td class="comparison-spec-label">Kamera</td><td>{{ recommendations.iloc[0]['camera'] }}</td><td>{{ recommendations.iloc[1]['camera'] }}</td></tr>
+                                <tr><td class="comparison-spec-label">Memory Card</td><td>{{ recommendations.iloc[0]['card'] }}</td><td>{{ recommendations.iloc[1]['card'] }}</td></tr>
+                                <tr><td class="comparison-spec-label">Harga</td><td class="spec-value price">{{ recommendations.iloc[0]['harga(string)'] }}</td><td class="spec-value price">{{ recommendations.iloc[1]['harga(string)'] }}</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            {% endif %}
         {% endif %}
 
         <div class="mt-12 text-center">
@@ -179,5 +194,23 @@
             </a>
         </div>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const detailToggles = document.querySelectorAll('.toggle-details');
+            detailToggles.forEach(toggle => {
+                toggle.addEventListener('click', () => {
+                    const content = toggle.nextElementSibling;
+                    const arrow = toggle.querySelector('.arrow');
+                    content.classList.toggle('hidden');
+                    if (content.classList.contains('hidden')) {
+                        arrow.classList.remove('rotate-180');
+                    } else {
+                        arrow.classList.add('rotate-180');
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 </html>
