@@ -106,7 +106,7 @@ def getRentangHarga(harga):
     elif 5000000 <= harga < 8000000:
         return '5.000.000-8.000.000 Rupiah'
     elif harga >= 8000000:
-        return 'Lebih dari 8.000.000'
+        return 'Lebih dari 8.000.000 Rupiah'
     return None
 
 
