@@ -51,47 +51,57 @@
     </style>
 </head>
 <script>
-    // Ambil data map dari backend
+    // Ambil data dari backend yang sudah kita siapkan
     const merekChipsetMap = JSON.parse('{{ merek_chipset_map_json | safe }}');
+    const allChipsets = JSON.parse('{{ all_chipsets_json | safe }}');
 
-    // Dapatkan elemen dropdown
+    // Dapatkan elemen dropdown dari halaman
     const merekSelect = document.getElementById('merek');
     const chipsetSelect = document.getElementById('merekProcessor');
 
     function updateChipsetOptions() {
         const selectedMerek = merekSelect.value;
+        const currentChipsetValue = chipsetSelect.value; // Simpan pilihan saat ini (jika ada)
 
-        // Simpan opsi chipset yang ada saat ini
-        const currentChipsetValue = chipsetSelect.value;
-
-        // Hapus semua opsi chipset yang ada
+        // 1. Kosongkan dulu semua opsi prosesor
         chipsetSelect.innerHTML = '';
 
-        // Tambahkan opsi default "Abaikan"
+        // 2. Tambahkan kembali opsi default "Abaikan"
         const defaultOption = document.createElement('option');
         defaultOption.value = "";
         defaultOption.textContent = "-- Abaikan Kriteria Ini --";
         chipsetSelect.appendChild(defaultOption);
 
-        // Jika merek dipilih, filter dan tambahkan opsi chipset yang sesuai
+        let chipsetsToDisplay;
+
+        // 3. Tentukan daftar prosesor yang akan ditampilkan
         if (selectedMerek && merekChipsetMap[selectedMerek]) {
-            const chipsets = merekChipsetMap[selectedMerek];
-            chipsets.forEach(chipset => {
-                const option = document.createElement('option');
-                option.value = chipset;
-                option.textContent = chipset;
-                chipsetSelect.appendChild(option);
-            });
+            // Jika pengguna memilih Merek spesifik, gunakan daftar prosesor untuk merek itu
+            chipsetsToDisplay = merekChipsetMap[selectedMerek];
+        } else {
+            // Jika pengguna TIDAK memilih merek, tampilkan SEMUA prosesor
+            chipsetsToDisplay = allChipsets;
         }
 
-        // Coba setel kembali ke nilai yang dipilih sebelumnya jika masih ada
-        chipsetSelect.value = currentChipsetValue;
+        // 4. Masukkan daftar prosesor yang sudah ditentukan ke dalam dropdown
+        chipsetsToDisplay.forEach(chipset => {
+            const option = document.createElement('option');
+            option.value = chipset;
+            option.textContent = chipset;
+            chipsetSelect.appendChild(option);
+        });
+
+        // 5. Coba kembalikan pilihan prosesor sebelumnya (jika masih valid)
+        // Ini agar pilihan prosesor tidak ter-reset saat pengguna mengubah merek lain
+        if (chipsetsToDisplay.includes(currentChipsetValue)) {
+            chipsetSelect.value = currentChipsetValue;
+        }
     }
 
-    // Panggil fungsi saat pilihan merek berubah
+    // Jalankan fungsi ini setiap kali pengguna mengubah pilihan Merek
     merekSelect.addEventListener('change', updateChipsetOptions);
 
-    // Panggil sekali saat halaman dimuat untuk inisialisasi
+    // Jalankan juga fungsi ini sekali saat halaman pertama kali dimuat
     document.addEventListener('DOMContentLoaded', updateChipsetOptions);
 </script>
 <body class="flex flex-col items-center min-h-screen p-4">

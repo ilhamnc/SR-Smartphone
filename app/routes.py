@@ -13,6 +13,12 @@ def index():
 def form():
     df = current_app.config['DATAFRAME']
 
+    # Buat pemetaan Merek -> Chipset
+    merek_chipset_map = df.groupby('merek')['merekProcessor'].unique().apply(list).to_dict()
+
+    # 2. Buat daftar SEMUA prosesor unik untuk ditampilkan saat tidak ada merek yang dipilih
+    all_chipsets = sorted(df['merekProcessor'].unique())
+
     brand_options = sorted(df['merek'].unique())
     brand_options.insert(0, '') # Menambahkan string kosong
     dualsim_options = sorted(df['dukunganDualSim'].unique())
@@ -38,9 +44,6 @@ def form():
     harga_options = sorted(df['rentangHarga'].unique(), key=lambda x: [int(i) for i in re.findall(r'\d+', x)])
     harga_options.insert(0, '') # Menambahkan string kosong
 
-    # Buat pemetaan Merek -> Chipset
-    merek_chipset_map = df.groupby('merek')['merekProcessor'].unique().apply(list).to_dict()
-
     return render_template('form.html',
         mereks=brand_options,
         dualsims=dualsim_options,
@@ -54,7 +57,8 @@ def form():
         cameras=camera_options,
         cards=card_options,
         hargas=harga_options,
-        merek_chipset_map_json=json.dumps(merek_chipset_map) # Kirim sebagai JSON string
+        merek_chipset_map_json=json.dumps(merek_chipset_map), # Kirim sebagai JSON string
+        all_chipsets_json=json.dumps(all_chipsets)
     )
 
 @main_app.route('/recommend', methods=['POST'])
