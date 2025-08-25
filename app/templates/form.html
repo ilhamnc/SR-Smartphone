@@ -50,6 +50,50 @@
         }
     </style>
 </head>
+<script>
+    // Ambil data map dari backend
+    const merekChipsetMap = JSON.parse('{{ merek_chipset_map_json | safe }}');
+
+    // Dapatkan elemen dropdown
+    const merekSelect = document.getElementById('merek');
+    const chipsetSelect = document.getElementById('merekProcessor');
+
+    function updateChipsetOptions() {
+        const selectedMerek = merekSelect.value;
+
+        // Simpan opsi chipset yang ada saat ini
+        const currentChipsetValue = chipsetSelect.value;
+
+        // Hapus semua opsi chipset yang ada
+        chipsetSelect.innerHTML = '';
+
+        // Tambahkan opsi default "Abaikan"
+        const defaultOption = document.createElement('option');
+        defaultOption.value = "";
+        defaultOption.textContent = "-- Abaikan Kriteria Ini --";
+        chipsetSelect.appendChild(defaultOption);
+
+        // Jika merek dipilih, filter dan tambahkan opsi chipset yang sesuai
+        if (selectedMerek && merekChipsetMap[selectedMerek]) {
+            const chipsets = merekChipsetMap[selectedMerek];
+            chipsets.forEach(chipset => {
+                const option = document.createElement('option');
+                option.value = chipset;
+                option.textContent = chipset;
+                chipsetSelect.appendChild(option);
+            });
+        }
+
+        // Coba setel kembali ke nilai yang dipilih sebelumnya jika masih ada
+        chipsetSelect.value = currentChipsetValue;
+    }
+
+    // Panggil fungsi saat pilihan merek berubah
+    merekSelect.addEventListener('change', updateChipsetOptions);
+
+    // Panggil sekali saat halaman dimuat untuk inisialisasi
+    document.addEventListener('DOMContentLoaded', updateChipsetOptions);
+</script>
 <body class="flex flex-col items-center min-h-screen p-4">
     <!-- Navbar (Optional, can be added if you want consistent navigation) -->
     <nav class="w-full bg-gray-800 p-4 shadow-md mb-4 rounded-b-xl">
@@ -88,108 +132,120 @@
         <form action="/recommend" method="POST" class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div class="form-group">
                 <label for="merek">Pilih Merek:</label>
-                <select id="merek" name="merek" class="block w-full" required>
-                    {% for merek in mereks %}
-                        <option value="{{ merek }}">{{ merek }}</option>
+                <select id="merek" name="merek" class="block w-full">
+                    <option value="" selected>-- Tidak Memilih Satupun --</option> {% for merek in mereks %}
+                        {% if merek != '' %} <option value="{{ merek }}">{{ merek }}</option>
+                        {% endif %}
                     {% endfor %}
                 </select>
             </div>
 
             <div class="form-group">
                 <label for="dukunganDualSim">Dukungan Dual SIM:</label>
-                <select id="dukunganDualSim" name="dukunganDualSim" class="block w-full" required>
-                    {% for dualsim in dualsims %}
-                        <option value="{{ dualsim }}">{{ dualsim }}</option>
+                <select id="dukunganDualSim" name="dukunganDualSim" class="block w-full">
+                    <option value="" selected>-- Tidak Memilih Satupun --</option> {% for dualsim in dualsims %}
+                        {% if dualsim != '' %} <option value="{{ dualsim }}">{{ dualsim }}</option>
+                        {% endif %}
                     {% endfor %}
                 </select>
             </div>
 
             <div class="form-group">
                 <label for="dukungan5G">Dukungan 5G:</label>
-                <select id="dukungan5G" name="dukungan5G" class="block w-full" required>
-                    {% for jaringan in jaringans %}
-                        <option value="{{ jaringan }}">{{ jaringan }}</option>
+                <select id="dukungan5G" name="dukungan5G" class="block w-full">
+                    <option value="" selected>-- Tidak Memilih Satupun --</option> {% for jaringan in jaringans %}
+                        {% if jaringan != '' %} <option value="{{ jaringan }}">{{ jaringan }}</option>
+                        {% endif %}
                     {% endfor %}
                 </select>
             </div>
 
             <div class="form-group">
                 <label for="dukunganNFC">Dukungan NFC:</label>
-                <select id="dukunganNFC" name="dukunganNFC" class="block w-full" required>
-                    {% for nfc in nfcs %}
-                        <option value="{{ nfc }}">{{ nfc }}</option>
+                <select id="dukunganNFC" name="dukunganNFC" class="block w-full">
+                    <option value="" selected>-- Tidak Memilih Satupun --</option> {% for nfc in nfcs %}
+                        {% if nfc != '' %} <option value="{{ nfc }}">{{ nfc }}</option>
+                        {% endif %}
                     {% endfor %}
                 </select>
             </div>
 
             <div class="form-group">
                 <label for="rentangLayar">Ukuran Layar:</label>
-                <select id="rentangLayar" name="rentangLayar" class="block w-full" required>
-                    {% for display in displays %}
-                        <option value="{{ display }}">{{ display }}</option>
+                <select id="rentangLayar" name="rentangLayar" class="block w-full">
+                    <option value="" selected>-- Tidak Memilih Satupun --</option> {% for display in displays %}
+                        {% if display != '' %} <option value="{{ display }}">{{ display }}</option>
+                        {% endif %}
                     {% endfor %}
                 </select>
             </div>
 
             <div class="form-group">
                 <label for="merekProcessor">Merek Processor:</label>
-                <select id="merekProcessor" name="merekProcessor" class="block w-full" required>
-                    {% for chipset in chipsets %}
-                        <option value="{{ chipset }}">{{ chipset }}</option>
+                <select id="merekProcessor" name="merekProcessor" class="block w-full">
+                    <option value="" selected>-- Tidak Memilih Satupun --</option> {% for chipset in chipsets %}
+                        {% if chipset != '' %} <option value="{{ chipset }}">{{ chipset }}</option>
+                        {% endif %}
                     {% endfor %}
                 </select>
             </div>
 
             <div class="form-group">
                 <label for="RAM">Kapasitas RAM:</label>
-                <select id="RAM" name="RAM" class="block w-full" required>
-                    {% for ram in rams %}
-                        <option value="{{ ram }}">{{ ram }}</option>
+                <select id="RAM" name="RAM" class="block w-full">
+                    <option value="" selected>-- Tidak Memilih Satupun --</option> {% for ram in rams %}
+                        {% if ram != '' %} <option value="{{ ram }}">{{ ram }}</option>
+                        {% endif %}
                     {% endfor %}
                 </select>
             </div>
 
             <div class="form-group">
                 <label for="ROM">Kapasitas ROM:</label>
-                <select id="ROM" name="ROM" class="block w-full" required>
-                    {% for rom in roms %}
-                        <option value="{{ rom }}">{{ rom }}</option>
+                <select id="ROM" name="ROM" class="block w-full">
+                    <option value="" selected>-- Tidak Memilih Satupun --</option> {% for rom in roms %}
+                        {% if rom != '' %} <option value="{{ rom }}">{{ rom }}</option>
+                        {% endif %}
                     {% endfor %}
                 </select>
             </div>
 
             <div class="form-group">
                 <label for="rentangBaterai">Kapasitas Baterai:</label>
-                <select id="rentangBaterai" name="rentangBaterai" class="block w-full" required>
-                    {% for battery in batteries %}
-                        <option value="{{ battery }}">{{ battery }}</option>
+                <select id="rentangBaterai" name="rentangBaterai" class="block w-full">
+                    <option value="" selected>-- Tidak Memilih Satupun --</option> {% for battery in batteries %}
+                        {% if battery != '' %} <option value="{{ battery }}">{{ battery }}</option>
+                        {% endif %}
                     {% endfor %}
                 </select>
             </div>
 
             <div class="form-group">
                 <label for="rentangKamera">Resolusi Kamera Utama:</label>
-                <select id="rentangKamera" name="rentangKamera" class="block w-full" required>
-                    {% for camera in cameras %}
-                        <option value="{{ camera }}">{{ camera }}</option>
+                <select id="rentangKamera" name="rentangKamera" class="block w-full">
+                    <option value="" selected>-- Tidak Memilih Satupun --</option> {% for camera in cameras %}
+                        {% if camera != '' %} <option value="{{ camera }}">{{ camera }}</option>
+                        {% endif %}
                     {% endfor %}
                 </select>
             </div>
 
             <div class="form-group">
                 <label for="dukunganMemoryCard">Dukungan Memory Card:</label>
-                <select id="dukunganMemoryCard" name="dukunganMemoryCard" class="block w-full" required>
-                    {% for card in cards %}
-                        <option value="{{ card }}">{{ card }}</option>
+                <select id="dukunganMemoryCard" name="dukunganMemoryCard" class="block w-full">
+                    <option value="" selected>-- Tidak Memilih Satupun --</option> {% for card in cards %}
+                        {% if card != '' %} <option value="{{ card }}">{{ card }}</option>
+                        {% endif %}
                     {% endfor %}
                 </select>
             </div>
 
             <div class="form-group">
                 <label for="rentangHarga">Harga:</label>
-                <select id="rentangHarga" name="rentangHarga" class="block w-full" required>
-                    {% for harga in hargas %}
-                        <option value="{{ harga }}">{{ harga }}</option>
+                <select id="rentangHarga" name="rentangHarga" class="block w-full">
+                    <option value="" selected>-- Tidak Memilih Satupun --</option> {% for harga in hargas %}
+                        {% if harga != '' %} <option value="{{ harga }}">{{ harga }}</option>
+                        {% endif %}
                     {% endfor %}
                 </select>
             </div>

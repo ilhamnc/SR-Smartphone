@@ -101,7 +101,7 @@
     <div class="w-full flex justify-center space-x-2 md:space-x-4 mb-10 sticky top-0 z-50 bg-gray-700 py-3 -mx-8 px-8 shadow-lg">
         <a href="#spesifikasi-pilihan" class="text-xs md:text-sm font-semibold text-white bg-gray-600 hover:bg-blue-500 rounded-md px-3 py-2 transition-colors duration-300">Spesifikasi</a>
         <a href="#rekomendasi-mirip" class="text-xs md:text-sm font-semibold text-white bg-gray-600 hover:bg-blue-500 rounded-md px-3 py-2 transition-colors duration-300">Rekomendasi</a>
-        <a href="#perbandingan-teratas" class="text-xs md:text-sm font-semibold text-white bg-gray-600 hover:bg-blue-500 rounded-md px-3 py-2 transition-colors duration-300">Perbandingan</a>
+        <!-- <a href="#perbandingan-teratas" class="text-xs md:text-sm font-semibold text-white bg-gray-600 hover:bg-blue-500 rounded-md px-3 py-2 transition-colors duration-300">Perbandingan</a> -->
     </div>
 
     <div class="container-box p-8 rounded-xl shadow-lg max-w-6xl w-full mb-8">
@@ -136,7 +136,10 @@
                         <div class="recommendation-card">
                             <div class="recommendation-card-header toggle-details">
                                 <div class="flex justify-between items-center">
-                                    <h3 class="text-lg font-bold text-blue-400">{{ row['model'] }}</h3>
+                                    <h3 class="text-lg font-bold text-blue-400">
+                                        <span class="bg-blue-600 text-white rounded-full h-8 w-8 flex items-center justify-center text-sm mr-3">{{ loop.index }}</span>
+                                        {{ row['model'] }}
+                                    </h3>
                                     <span class="arrow transform transition-transform duration-300">▼</span>
                                 </div>
                             </div>
@@ -157,7 +160,7 @@
                 </div>
             </div>
 
-            {% if recommendations|length >= 2 %}
+            <!-- {% if recommendations|length >= 2 %}
                 <div id="perbandingan-teratas" class="mt-12 scroll-mt-24">
                     <h2 class="text-2xl font-bold mb-6 text-center text-white">2 Smartphone Yang Paling Direkomendasikan</h2>
                     <div class="overflow-x-auto">
@@ -182,7 +185,7 @@
                         </table>
                     </div>
                 </div>
-            {% endif %}
+            {% endif %} -->
         {% endif %}
 
         <div class="mt-12 text-center">
