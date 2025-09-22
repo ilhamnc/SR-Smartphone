@@ -1,4 +1,4 @@
-# SmartRec: Sistem Rekomendasi Smartphone
+<img width="1891" height="915" alt="Home" src="https://github.com/user-attachments/assets/7529d6b3-c94e-4f98-9b0d-72e4fcb884ca" /># SmartRec: Sistem Rekomendasi Smartphone
 
 SmartRec adalah aplikasi web yang membantu pengguna menemukan smartphone yang paling sesuai dengan preferensi spesifikasi mereka. Pengguna dapat memasukkan kriteria yang diinginkan, seperti merek, RAM, kapasitas baterai, dan lainnya, lalu sistem akan memberikan daftar 10 smartphone teratas yang paling mirip.
 
@@ -10,16 +10,16 @@ SmartRec adalah aplikasi web yang membantu pengguna menemukan smartphone yang pa
     <td><b>Halaman Cara Kerja</b></td>
   </tr>
   <tr>
-    <td><img src="Antarmuka Web/Home"></td>
-    <td><img src="Antarmuka Web/CaraKerja" width="400"></td>
+    <td><img width="400" alt="Home" src="https://github.com/user-attachments/assets/9366df2e-37c7-4179-8fa6-d13d9d31e821"/></td>
+    <td><img width="400" alt="CaraKerja" src="https://github.com/user-attachments/assets/107d97d0-9e68-4451-a23b-472d4ed960c0"/></td>
   </tr>
   <tr>
     <td><b>Formulir Rekomendasi</b></td>
     <td><b>Hasil Rekomendasi</b></td>
   </tr>
   <tr>
-    <td><img src="Antarmuka Web/Form1" width="400"></td>
-    <td><img src="Antarmuka Web/Hasil1" width="400"></td>
+    <td><img width="400" alt="Form1" src="https://github.com/user-attachments/assets/f022bc3a-1a38-47a6-82e8-1543352945c0" /></td>
+    <td><img width="400" alt="Hasil1" src="https://github.com/user-attachments/assets/773640a7-01fb-4afc-97b4-35a2856a7537" /></td>
   </tr>
 </table>
 
