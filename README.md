@@ -10,16 +10,16 @@ SmartRec adalah aplikasi web yang membantu pengguna menemukan smartphone yang pa
     <td><b>Halaman Cara Kerja</b></td>
   </tr>
   <tr>
-    <td><img src="/antarmuka web/home"></td>
-    <td><img src="/antarmuka web/CaraKerja" width="400"></td>
+    <td><img src="Antarmuka Web/Home"></td>
+    <td><img src="Antarmuka Web/CaraKerja" width="400"></td>
   </tr>
   <tr>
     <td><b>Formulir Rekomendasi</b></td>
     <td><b>Hasil Rekomendasi</b></td>
   </tr>
   <tr>
-    <td><img src="/antarmuka web/Form1" width="400"></td>
-    <td><img src="/antarmuka web/Hasil1" width="400"></td>
+    <td><img src="Antarmuka Web/Form1" width="400"></td>
+    <td><img src="Antarmuka Web/Hasil1" width="400"></td>
   </tr>
 </table>
 
