@@ -1,5 +1,3 @@
-<img width="1891" height="915" alt="Home" src="https://github.com/user-attachments/assets/7529d6b3-c94e-4f98-9b0d-72e4fcb884ca" /># SmartRec: Sistem Rekomendasi Smartphone
-
 SmartRec adalah aplikasi web yang membantu pengguna menemukan smartphone yang paling sesuai dengan preferensi spesifikasi mereka. Pengguna dapat memasukkan kriteria yang diinginkan, seperti merek, RAM, kapasitas baterai, dan lainnya, lalu sistem akan memberikan daftar 10 smartphone teratas yang paling mirip.
 
 ## ✨ Tampilan Aplikasi
